@@ -9,7 +9,7 @@ from datetime import datetime
 from time import sleep
 
 import click
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func, distinct
 
 from amrdb.model import Base, Message, get_session
 
@@ -56,21 +56,36 @@ def main():
 
 
 @main.command(name='create-tables')
-@click.option('--connection-string', default=os.getenv('CONNECTION_STRING'))
-def create_tables(connection_string):
-    assert connection_string, "no connection string defined"
+def create_tables():
+    connection_string = os.getenv('CONNECTION_STRING')
+    assert connection_string, "connection string undefined"
     engine = create_engine(connection_string)
     click.echo('create tables...')
     Base.metadata.create_all(bind=engine, checkfirst=True)
     click.echo('done')
 
 
+@main.command(name='status')
+def status():
+    session = get_session()
+    c = session.query(Message).count()
+    print('{} message recorded'.format(c))
+    d = session.query(func.count(distinct(Message.device_id))).scalar()
+    print('{} distinct device ids'.format(d))
+    x = session.query(
+        func.min(Message.timestamp).label('min'),
+        func.max(Message.timestamp).label('max'),
+    ).first()
+    print('timetamps {} --> {}'.format(x.min, x.max))
+
+
 @main.command(name='read')
-@click.option('--rtl-host-port', '-h', default='raspberrypi:1234')
+@click.option('--rtl-host-port', '-h', default=os.getenv('RTL_TCP_HOST_PORT'))
 @click.option('--verbose', '-v', is_flag=True)
 @click.option('--max-errors', '-m', default=100)
 @click.option('--test', '-t', is_flag=True)
 def read(rtl_host_port, verbose, max_errors, test):
+    assert rtl_host_port, "rtl_tcp host and port undefined"
     store = get_store()
     proc = get_fake_process() if test else get_process(rtl_host_port)
     read_until_errors(max_errors=max_errors, proc=proc, store=store, verbose=verbose)

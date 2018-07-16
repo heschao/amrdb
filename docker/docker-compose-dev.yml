@@ -2,20 +2,18 @@ version: '2'
 services:
   amr-console:
     image: "amr"
-    user: cranacho
-    working_dir: /home/cranacho/amrdb
+    user: amr
+    working_dir: /home/amr/amrdb
     volumes: 
-     - ./amrdb:/home/cranacho/amrdb
+     - ./amrdb:/home/amr/amrdb
     environment:
-     - PYTHONPATH=/home/cranacho/amrdb
-     - CONNECTION_STRING=postgresql+psycopg2://cranacho:${AMRDB_PASSWORD}@amr-postgres:5432/amr
+     - PYTHONPATH=/home/amr/amrdb
+     - CONNECTION_STRING=postgresql+psycopg2://amr:monitor-me@amr-postgres:5432/amr
      - LC_ALL=C.UTF-8
      - LANG=C.UTF-8
     stdin_open: true
     tty: true
     container_name: amr-container
-    ports:
-     - 5022:8081
 
   amr-postgres:
     image: postgres:latest

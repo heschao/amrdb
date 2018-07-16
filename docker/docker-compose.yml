@@ -2,14 +2,14 @@ version: '2'
 services:
   amr-console:
     image: "amr"
-    user: cranacho
-    working_dir: /home/cranacho/amrdb
+    user: amr
+    working_dir: /home/amr/amrdb
     volumes: 
-     - ./amrdb:/home/cranacho/amrdb
-     - ./notebook:/home/cranacho/notebook
+     - ../:/home/amr/amrdb
     environment:
-     - PYTHONPATH=/home/cranacho/amrdb
+     - PYTHONPATH=/home/amr/amrdb
      - CONNECTION_STRING=${AMR_CONNECTION_STRING}
+     - RTL_TCP_HOST_PORT=${RTL_TCP_HOST_PORT}
      - LC_ALL=C.UTF-8
      - LANG=C.UTF-8
 

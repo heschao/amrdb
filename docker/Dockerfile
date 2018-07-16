@@ -15,8 +15,5 @@ RUN pip3 install numpy scipy
 RUN pip install -U git+git://github.com/heschao/craniutil.git
 RUN go get github.com/bemasher/rtlamr
 
-RUN adduser --disabled-password --gecos '' cranacho
-USER cranacho
-RUN mkdir /home/cranacho/.jupyter
-COPY ./jupyter_notebook_config.py /home/cranacho/.jupyter/jupyter_notebook_config.py
-
+RUN adduser --disabled-password --gecos '' amr
+USER amr
