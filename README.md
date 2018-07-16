@@ -8,11 +8,17 @@ Save results to a database table for further analysis.
 
 ## Usage
 Clone the repository:
-```clone https://github.com/heschao/amrdb```
+```
+clone https://github.com/heschao/amrdb
+```
 Set the database credentials as an environment variable:
-```export AMR_CONNECTION_STRING=postgresql+psycopg2://username:password@dbhost:dbport/dbinstance``` 
+```
+export AMR_CONNECTION_STRING=postgresql+psycopg2://username:password@dbhost:dbport/dbinstance
+``` 
 Set the host and port of rtl_tcp process:
-```export RTL_TCP_HOST_PORT=host:port```
+```
+export RTL_TCP_HOST_PORT=host:port
+```
 Make sure you have docker and docker-compose installed. Run the init.sh script
 ```
 cd amrdb
