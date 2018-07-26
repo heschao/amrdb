@@ -12,7 +12,7 @@ RUN pip3 install \
     testing.postgresql
 RUN pip3 install click psycopg2-binary
 RUN pip3 install numpy scipy 
-RUN pip install -U git+git://github.com/heschao/craniutil.git
+RUN pip3 install -U git+git://github.com/heschao/craniutil.git
 RUN go get github.com/bemasher/rtlamr
 
 RUN adduser --disabled-password --gecos '' amr
