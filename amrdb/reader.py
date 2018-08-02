@@ -13,13 +13,16 @@ from sqlalchemy import create_engine, func, distinct
 
 from amrdb.model import Base, Message, get_session
 
-DEFAULT_PATTERN = re.compile(r'^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}).+Z')
+DEFAULT_PATTERN = re.compile(r'^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}).*Z')
 
 
 def parse_timestamp(s, p=DEFAULT_PATTERN):
     m = p.search(s)
     return datetime.strptime(m.groups()[0], '%Y-%m-%dT%H:%M:%S.%f')
 
+def test_parse_timestamp():
+    result = parse_timestamp('2018-07-28T19:10:08.532078Z')
+    assert result==datetime(2018,7,28,19,10,8,532078)
 
 class Store:
     __metaclass__ = ABCMeta

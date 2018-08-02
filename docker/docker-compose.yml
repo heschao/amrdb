@@ -18,5 +18,5 @@ services:
     container_name: amr-container
     ports:
         - 5030:8081
-    command: jupyter notebook --notebook-dir=../notebook
+#    command: jupyter notebook --notebook-dir=../notebook
 
