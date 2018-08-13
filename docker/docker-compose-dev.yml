@@ -9,6 +9,7 @@ services:
     environment:
      - PYTHONPATH=/home/amr/amrdb
      - CONNECTION_STRING=postgresql+psycopg2://amr:monitor-me@amr-postgres:5432/amr
+     - RTL_TCP_HOST_PORT=1234
      - LC_ALL=C.UTF-8
      - LANG=C.UTF-8
     stdin_open: true

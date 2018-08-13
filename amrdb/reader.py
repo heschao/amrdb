@@ -11,6 +11,7 @@ from time import sleep
 import click
 from sqlalchemy import create_engine, func, distinct
 
+from amrdb.exceptions import ParseErrorException
 from amrdb.model import Base, Message, get_session
 
 DEFAULT_PATTERN = re.compile(r'^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}).*Z')
@@ -18,6 +19,8 @@ DEFAULT_PATTERN = re.compile(r'^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}).*Z'
 
 def parse_timestamp(s, p=DEFAULT_PATTERN):
     m = p.search(s)
+    if not m:
+        raise ParseErrorException('couldn\'t parse date {}'.format(s))
     return datetime.strptime(m.groups()[0], '%Y-%m-%dT%H:%M:%S.%f')
 
 def test_parse_timestamp():
